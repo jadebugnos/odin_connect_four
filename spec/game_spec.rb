@@ -8,6 +8,7 @@ RSpec.describe Game do
 
     before do
       allow(game_board).to receive(:display_board)
+      allow(game_start).to receive(:puts)
     end
 
     context 'when run' do
@@ -29,5 +30,12 @@ RSpec.describe Game do
   end
 
   describe '#run_game' do
+    subject(:game_running) { described_class.new }
+
+    context 'when the game is not over' do
+      it 'asks if game is over every round' do
+        expect(game_running).to receive(:game_over?)
+      end
+    end
   end
 end

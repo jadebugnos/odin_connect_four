@@ -1,6 +1,6 @@
 # this file defines the Game class logic
 class Game
-  def initialize(player, board)
+  def initialize(player = nil, board = nil)
     @player = player
     @board = board
   end
@@ -22,5 +22,11 @@ class Game
     TEXT
   end
 
-  def run_game; end
+  def run_game
+   
+  end
+
+  def game_over?
+    
+  end
 end
