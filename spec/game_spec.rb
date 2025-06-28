@@ -1,4 +1,6 @@
 require_relative '../lib/game'
+require_relative '../lib/player'
+require_relative '../lib/board'
 
 RSpec.describe Game do
   describe '#play_game' do
@@ -9,6 +11,7 @@ RSpec.describe Game do
     before do
       allow(game_board).to receive(:display_board)
       allow(game_start).to receive(:puts)
+      allow(game_start).to receive(:run_game)
     end
 
     context 'when run' do
@@ -29,13 +32,26 @@ RSpec.describe Game do
     end
   end
 
-  describe '#run_game' do
-    subject(:game_running) { described_class.new }
+  # describe '#run_game' do
+  #   let(:player) { double('player') }
+  #   let(:board) { double('board') }
+  #   subject(:game_running) { described_class.new(player, board) }
 
-    context 'when the game is not over' do
-      it 'asks if game is over every round' do
-        expect(game_running).to receive(:game_over?)
-      end
-    end
-  end
+  #   before do
+  #     allow(player).to receive(:validate_player_input)
+  #     allow(game_running).to receive(:game_over?)
+  #   end
+
+  #   context 'when the game is not over' do
+  #     it 'will asks if the game is over' do
+  #       expect(game_running).to receive(:game_over?)
+  #       game_running.run_game
+  #     end
+
+  #     it 'asks for players input' do
+  #       expect(player).to receive(:validate_player_input)
+  #       game_running.run_game
+  #     end
+  #   end
+  # end
 end

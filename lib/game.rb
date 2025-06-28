@@ -3,6 +3,7 @@ class Game
   def initialize(player = nil, board = nil)
     @player = player
     @board = board
+    @game_state = false
   end
 
   def play_game
@@ -23,10 +24,9 @@ class Game
   end
 
   def run_game
-   
+    game_over?
+    @player.validate_player_input
   end
 
-  def game_over?
-    
-  end
+  def game_over?; end
 end

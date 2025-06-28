@@ -3,6 +3,6 @@ require_relative 'lib/player'
 require_relative 'lib/board'
 
 player = Player.new
-board = Board.new
+board = GameBoard.new
 game = Game.new(player, board)
 game.play_game
