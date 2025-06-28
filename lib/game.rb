@@ -9,7 +9,7 @@ class Game
   def play_game
     puts game_intro
     @board.display_board
-    run_game
+    # run_game
   end
 
   def game_intro

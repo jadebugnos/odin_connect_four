@@ -9,6 +9,10 @@ class GameBoard
   end
 
   def create_blocks
-    @board
+    @board.flat_map do |row|
+      row.map do |num|
+        num.between?(1, 9) ? "|0#{num}|" : "|#{num}|"
+      end
+    end.each_slice(7).to_a
   end
 end
