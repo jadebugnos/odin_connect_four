@@ -1,7 +1,7 @@
 # this file defines the GmeBoard class which hold the board logic
 class GameBoard
   def initialize
-    @board = (1..42).to_a.each_slice(7).to_a
+    @board = nil
   end
 
   def display_board
@@ -9,10 +9,13 @@ class GameBoard
   end
 
   def create_blocks
-    @board.flat_map do |row|
-      row.map do |num|
-        num.between?(1, 9) ? "|0#{num}|" : "|#{num}|"
-      end
-    end.each_slice(7).to_a
+    if @board.nil?
+      @board = Array.new(42, '|  |').each_slice(7).to_a.unshift(['  1   2   3   4   5   6   7'])
+    else
+      @board
+    end
   end
+
+  # Reminder: refactor the board logic to display the board properly
+  # to only show cells with no numbers and only the top row has numbers
 end

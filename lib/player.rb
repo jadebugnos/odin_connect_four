@@ -1,7 +1,7 @@
 class Player
   def validate_player_input
     loop do
-      puts 'Select a column by typing 1-6: '
+      puts 'Select a column by typing 1-7: '
       input = Integer(gets.chomp)
 
       return input if input.between?(1, 6)

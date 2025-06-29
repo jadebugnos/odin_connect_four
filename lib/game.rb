@@ -25,7 +25,8 @@ class Game
 
   def run_game
     # game_over?
-    @player.validate_player_input
+    player_input = @player.validate_player_input
+    @board.update_board(player_input)
   end
 
   def game_over?; end
