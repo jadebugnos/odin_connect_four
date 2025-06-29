@@ -32,26 +32,26 @@ RSpec.describe Game do
     end
   end
 
-  # describe '#run_game' do
-  #   let(:player) { double('player') }
-  #   let(:board) { double('board') }
-  #   subject(:game_running) { described_class.new(player, board) }
+  describe '#run_game' do
+    let(:player) { double('player') }
+    let(:board) { double('board') }
+    subject(:game_running) { described_class.new(player, board) }
 
-  #   before do
-  #     allow(player).to receive(:validate_player_input)
-  #     allow(game_running).to receive(:game_over?)
-  #   end
+    before do
+      allow(player).to receive(:validate_player_input)
+      allow(game_running).to receive(:game_over?)
+    end
 
-  #   context 'when the game is not over' do
-  #     it 'will asks if the game is over' do
-  #       expect(game_running).to receive(:game_over?)
-  #       game_running.run_game
-  #     end
+    context 'when the game is not over' do
+      it 'will asks if the game is over' do
+        expect(game_running).to receive(:game_over?)
+        game_running.run_game
+      end
 
-  #     it 'asks for players input' do
-  #       expect(player).to receive(:validate_player_input)
-  #       game_running.run_game
-  #     end
-  #   end
-  # end
+      it 'asks for players input' do
+        expect(player).to receive(:validate_player_input)
+        game_running.run_game
+      end
+    end
+  end
 end

@@ -9,7 +9,7 @@ class Game
   def play_game
     puts game_intro
     @board.display_board
-    # run_game
+    run_game
   end
 
   def game_intro
@@ -24,7 +24,7 @@ class Game
   end
 
   def run_game
-    game_over?
+    # game_over?
     @player.validate_player_input
   end
 
