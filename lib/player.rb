@@ -9,7 +9,7 @@ class Player # rubocop:disable Style/Documentation
       puts 'Select a column by typing 1-7: '
       input = Integer(gets.chomp)
 
-      return input if input.between?(1, 6)
+      return input if input.between?(1, 7)
 
       puts 'input out of range'
     rescue ArgumentError
