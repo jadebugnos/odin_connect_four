@@ -46,4 +46,59 @@ RSpec.describe GameBoard do
       expect(new_board).to eql(sample_array)
     end
   end
+
+  describe '#update_board' do
+    subject(:game_board) { described_class.new }
+
+    context 'when the player input is 7' do
+      before do
+        sample_array = [
+          ['  1   2   3   4   5   6   7'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |']
+        ]
+        game_board.instance_variable_set(:@board, sample_array)
+      end
+      it 'will edit the board based on player input' do
+        red_disc = "|\u2648|"
+        player_input = 7
+        player_disc = 0
+
+        expect do
+          game_board.update_board(player_input, player_disc)
+        end.to change { game_board.instance_variable_get(:@board)[6][6] }
+          .from('|  |').to(red_disc)
+      end
+    end
+
+    context 'when the lower row is occupied' do
+      before do
+        sample_array = [
+          ['  1   2   3   4   5   6   7'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', "|\u2648|"],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', "|\u2648|"],
+          ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', "|\u2648|"]
+        ]
+        game_board.instance_variable_set(:@board, sample_array)
+      end
+
+      it 'will place the disc in the next available row above' do
+        player_input = 7
+        disc = "|\u2648|"
+        player_disc = 0
+
+        expect do
+          game_board.update_board(player_input, player_disc)
+        end.to change { game_board.instance_variable_get(:@board)[3][6] }
+          .from('|  |').to(disc)
+      end
+    end
+  end
 end
