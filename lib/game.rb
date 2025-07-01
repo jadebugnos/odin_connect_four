@@ -8,7 +8,6 @@ class Game
 
   def play_game
     puts game_intro
-    @board.display_board
     run_game
   end
 
@@ -24,10 +23,19 @@ class Game
   end
 
   def run_game
-    # game_over?
-    player_input = @player.validate_player_input
-    @board.update_board(player_input)
+    until game_over?
+      @board.display_board
+      process_move
+    end
   end
 
-  def game_over?; end
+  def process_move
+    player_input = @player.validate_player_input
+    player_disc = @player.player_move
+    @board.update_board(player_input, player_disc)
+  end
+
+  def game_over?
+    false
+  end
 end
