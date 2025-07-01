@@ -66,10 +66,9 @@ RSpec.describe GameBoard do
       it 'will edit the board based on player input' do
         red_disc = "|\u2648|"
         player_input = 7
-        player_disc = 0
 
         expect do
-          game_board.update_board(player_input, player_disc)
+          game_board.update_board(player_input, red_disc)
         end.to change { game_board.instance_variable_get(:@board)[6][6] }
           .from('|  |').to(red_disc)
       end
@@ -92,10 +91,9 @@ RSpec.describe GameBoard do
       it 'will place the disc in the next available row above' do
         player_input = 7
         disc = "|\u2648|"
-        player_disc = 0
 
         expect do
-          game_board.update_board(player_input, player_disc)
+          game_board.update_board(player_input, disc)
         end.to change { game_board.instance_variable_get(:@board)[3][6] }
           .from('|  |').to(disc)
       end

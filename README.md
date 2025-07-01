@@ -4,8 +4,8 @@ This is a CLI-based implementation of the classic Connect Four game, built in Ru
 
 ## Project Goals
 
-- [ ] Display a 7x6 game board
-- [ ] Allow two players to take turns
+- [X] Display a 7x6 game board
+- [X] Allow two players to take turns
 - [ ] Detect a win (4 in a row: vertical, horizontal, diagonal)
 - [ ] Highlight winning discs
 - [ ] Add a restart/reset option

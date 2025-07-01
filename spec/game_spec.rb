@@ -20,11 +20,6 @@ RSpec.describe Game do
         game_start.play_game
       end
 
-      it 'displays the game_board' do
-        expect(game_board).to receive(:display_board)
-        game_start.play_game
-      end
-
       it 'runs the game' do
         expect(game_start).to receive(:run_game)
         game_start.play_game
@@ -38,8 +33,9 @@ RSpec.describe Game do
     subject(:game_running) { described_class.new(player, board) }
 
     before do
-      allow(player).to receive(:validate_player_input)
-      allow(game_running).to receive(:game_over?)
+      allow(game_running).to receive(:game_over?).and_return(false, true)
+      allow(board).to receive(:display_board)
+      allow(game_running).to receive(:process_move)
     end
 
     context 'when the game is not over' do
@@ -48,10 +44,17 @@ RSpec.describe Game do
         game_running.run_game
       end
 
-      it 'asks for players input' do
-        expect(player).to receive(:validate_player_input)
-        game_running.run_game
-      end
+      # Reminder: this test samples are obsolete since run_game
+      # does not call this methods
+      # it 'displays the game_board' do
+      #   expect(board).to receive(:update_board)
+      #   game_running.run_game
+      # end
+
+      # it 'asks for players input' do
+      #   expect(player).to receive(:validate_player_input)
+      #   game_running.run_game
+      # end
     end
   end
 end
