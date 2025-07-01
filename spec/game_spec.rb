@@ -39,22 +39,24 @@ RSpec.describe Game do
     end
 
     context 'when the game is not over' do
-      it 'will asks if the game is over' do
-        expect(game_running).to receive(:game_over?)
+      it 'call the methods' do
+        expect(board).to receive(:display_board)
+        expect(game_running).to receive(:process_move)
         game_running.run_game
       end
+    end
 
-      # Reminder: this test samples are obsolete since run_game
-      # does not call this methods
-      # it 'displays the game_board' do
-      #   expect(board).to receive(:update_board)
-      #   game_running.run_game
-      # end
-
-      # it 'asks for players input' do
-      #   expect(player).to receive(:validate_player_input)
-      #   game_running.run_game
-      # end
+    context 'when the game is over' do
+      before do
+        allow(game_running).to receive(:game_over?).and_return(true)
+        allow(board).to receive(:display_board)
+        allow(game_running).to receive(:process_move)
+      end
+      it 'will not call the methods' do
+        expect(board).not_to receive(:display_board)
+        expect(game_running).not_to receive(:process_move)
+        game_running.run_game
+      end
     end
   end
 end
