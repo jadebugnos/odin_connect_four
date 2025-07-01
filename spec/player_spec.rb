@@ -43,4 +43,21 @@ RSpec.describe Player do
       end
     end
   end
+
+  describe '#player_move' do
+    subject(:select_move) { described_class.new }
+    it 'will set the first turn to be the last move' do
+      expect { select_move.player_move }.to change { select_move.instance_variable_get(:@last_move).length }.by(1)
+    end
+
+    it 'will switch turn based on the last move' do
+      player_one = "|\u2648|"
+      player_two = "|\u264C|"
+      select_move.instance_variable_set(:@last_move, [player_one])
+
+      expect { select_move.player_move }.to change {
+        select_move.instance_variable_get(:@last_move)[-1]
+      }.from(player_one).to(player_two)
+    end
+  end
 end
