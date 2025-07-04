@@ -1,5 +1,7 @@
 # this file defines the GmeBoard class which hold the board logic
 class GameBoard
+  attr_accessor :board
+
   def initialize(board = nil)
     @board = board
   end
@@ -27,7 +29,7 @@ class GameBoard
 
       if @board[row][column] == empty
         @board[row][column] = player_disc
-        break
+        return [row, column]
       else
         row -= 1
       end
