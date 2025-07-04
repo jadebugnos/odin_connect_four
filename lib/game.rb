@@ -6,6 +6,7 @@ class Game
     @last_position = []
     @directions = [[0, 1], [1, 0], [1, 1], [1, -1]]
     @player_disc = nil
+    @combination_positions = []
   end
 
   def play_game
@@ -31,7 +32,10 @@ class Game
 
       # Checks if the last move resulted in a win.
       # Parameters: game board, last move's row and column, and the current player's disc.
-      break if winning_move?(@board.board, @last_position[-1][0], @last_position[-1][1], @player_disc)
+      if winning_move?(@board.board, @last_position[-1][0], @last_position[-1][1], @player_disc)
+        declare_win
+        break
+      end
     end
   end
 
@@ -42,7 +46,7 @@ class Game
   end
 
   # helper function to winning_move? to count 4 occurrences of discs
-  def count_combination(board, row, col, delta_row, delta_col, player_disc) # rubocop:disable Metrics/ParameterLists
+  def count_combination(board, row, col, delta_row, delta_col, player_disc) # rubocop:disable Metrics/ParameterLists,Metrics/MethodLength
     count = 0
     current_row = row + delta_row
     current_col = col + delta_col
@@ -50,6 +54,7 @@ class Game
     while in_bounds?(board, current_row, current_col) &&
           board[current_row][current_col] == player_disc
       count += 1
+      yield(current_row, current_col) if block_given?
       current_row += delta_row
       current_col += delta_col
     end
@@ -64,18 +69,39 @@ class Game
   end
 
   # this function is used to scan the board starting from the current position(the players chosen disc)
-  def winning_move?(board, row, col, player_disc)
+  def winning_move?(board, row, col, player_disc) # rubocop:disable Metrics/MethodLength
     # remove the top row for accurate board representation
     top_less_board = board[1..]
+    positions = []
+    @combination_positions.clear
 
     # iterate through opposite directions simultaneously to count occurrences on both sides
     # then sum up both result with 1 (current disc) if 4 or greater is found, will return true
-    @directions.any? do |delta_row, delta_col|
+    found = @directions.any? do |delta_row, delta_col|
       total_count = 1 +
-                    count_combination(top_less_board, row, col, delta_row, delta_col, player_disc) +
-                    count_combination(top_less_board, row, col, -delta_row, -delta_col, player_disc)
+                    count_combination(top_less_board, row, col, delta_row, delta_col, player_disc) do |row, col|
+                      positions << [row, col]
+                    end +
+                    count_combination(top_less_board, row, col, -delta_row, -delta_col, player_disc) do |row, col|
+                      positions << [row, col]
+                    end
 
       total_count >= 4
+    end
+
+    @combination_positions.concat([[row, col]] + positions) if found
+    found
+  end
+
+  def declare_win
+    puts 'combination found, you win'
+    highlight
+    @board.display_board
+  end
+
+  def highlight
+    @combination_positions.each do |row, col|
+      @board.board[row + 1][col] = "|\u263B |"
     end
   end
 end
