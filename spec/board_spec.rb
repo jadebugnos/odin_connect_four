@@ -33,7 +33,6 @@ RSpec.describe GameBoard do
 
     it 'returns a modified 2D array' do
       sample_array = [
-        ['  1   2   3   4   5   6   7'],
         ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
         ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
         ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
@@ -53,7 +52,6 @@ RSpec.describe GameBoard do
     context 'when the player input is 7' do
       before do
         sample_array = [
-          ['  1   2   3   4   5   6   7'],
           ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
           ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
           ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
@@ -69,7 +67,7 @@ RSpec.describe GameBoard do
 
         expect do
           game_board.update_board(player_input, red_disc)
-        end.to change { game_board.instance_variable_get(:@board)[6][6] }
+        end.to change { game_board.instance_variable_get(:@board)[5][6] }
           .from('|  |').to(red_disc)
       end
     end
@@ -77,7 +75,6 @@ RSpec.describe GameBoard do
     context 'when the lower row is occupied' do
       before do
         sample_array = [
-          ['  1   2   3   4   5   6   7'],
           ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
           ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
           ['|  |', '|  |', '|  |', '|  |', '|  |', '|  |', '|  |'],
@@ -94,7 +91,7 @@ RSpec.describe GameBoard do
 
         expect do
           game_board.update_board(player_input, disc)
-        end.to change { game_board.instance_variable_get(:@board)[3][6] }
+        end.to change { game_board.instance_variable_get(:@board)[2][6] }
           .from('|  |').to(disc)
       end
     end
