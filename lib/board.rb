@@ -7,20 +7,20 @@ class GameBoard
   end
 
   def display_board
+    puts '  1   2   3   4   5   6   7'
     create_blocks.each { |row| puts row.join }
   end
 
   def create_blocks
     if @board.nil?
-      top_row = ['  1   2   3   4   5   6   7']
-      @board = Array.new(42, '|  |').each_slice(7).to_a.unshift(top_row)
+      @board = Array.new(42, '|  |').each_slice(7).to_a
     else
       @board
     end
   end
 
   def update_board(column, player_disc) # rubocop:disable Metrics/MethodLength
-    row = 6
+    row = 5
     column -= 1
     empty = '|  |'
 

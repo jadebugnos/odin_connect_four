@@ -59,4 +59,13 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe 'check_combination' do
+    subject(:winning_combination) { described_class.new }
+    it 'will return true if combination is found' do
+      win = winning_combination.check_combination
+
+      expect(win).to eq(true)
+    end
+  end
 end

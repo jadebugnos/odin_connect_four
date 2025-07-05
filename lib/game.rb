@@ -71,7 +71,6 @@ class Game
   # this function is used to scan the board starting from the current position(the players chosen disc)
   def winning_move?(board, row, col, player_disc) # rubocop:disable Metrics/MethodLength
     # remove the top row for accurate board representation
-    top_less_board = board[1..]
     positions = []
     @combination_positions.clear
 
@@ -79,29 +78,30 @@ class Game
     # then sum up both result with 1 (current disc) if 4 or greater is found, will return true
     found = @directions.any? do |delta_row, delta_col|
       total_count = 1 +
-                    count_combination(top_less_board, row, col, delta_row, delta_col, player_disc) do |row, col|
+                    count_combination(board, row, col, delta_row, delta_col, player_disc) do |row, col|
                       positions << [row, col]
                     end +
-                    count_combination(top_less_board, row, col, -delta_row, -delta_col, player_disc) do |row, col|
+                    count_combination(board, row, col, -delta_row, -delta_col, player_disc) do |row, col|
                       positions << [row, col]
                     end
 
       total_count >= 4
     end
 
+    # collects the 4 combination coordinates for highlighting
     @combination_positions.concat([[row, col]] + positions) if found
     found
   end
 
   def declare_win
-    puts 'combination found, you win'
+    puts 'combination found, you win!'
     highlight
     @board.display_board
   end
 
   def highlight
     @combination_positions.each do |row, col|
-      @board.board[row + 1][col] = "|\u263B |"
+      @board.board[row][col] = "|\u263B |"
     end
   end
 end
