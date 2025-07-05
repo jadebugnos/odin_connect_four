@@ -34,13 +34,21 @@ class Game
       @board.display_board
       process_move
 
-      # Checks if the last move resulted in a win.
-      # Parameters: game board, last move's row and column, and the current player's disc.
-      if winning_move?(@board.board, @last_position[-1][0], @last_position[-1][1], @player_disc)
-        declare_win
-        break
-      end
+      break if game_over?
     end
+  end
+
+  # Checks if the last move resulted in a win.
+  # Parameters: game board, last move's row and column, and the current player's disc.
+  def game_over?
+    game_board = @board.board
+    row = @last_position[-1][0]
+    column = @last_position[-1][1]
+
+    return false unless winning_move?(game_board, row, column, @player_disc)
+
+    declare_win
+    true
   end
 
   # Gets input from player, determines the correct disc, and updates the board
