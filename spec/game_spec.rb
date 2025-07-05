@@ -33,9 +33,9 @@ RSpec.describe Game do
     subject(:game_running) { described_class.new(player, board) }
 
     before do
-      allow(game_running).to receive(:game_over?).and_return(false, true)
       allow(board).to receive(:display_board)
       allow(game_running).to receive(:process_move)
+      allow(game_running).to receive(:game_over?).and_return(false, true)
     end
 
     context 'when the game is not over' do
@@ -48,24 +48,33 @@ RSpec.describe Game do
 
     context 'when the game is over' do
       before do
-        allow(game_running).to receive(:game_over?).and_return(true)
         allow(board).to receive(:display_board)
         allow(game_running).to receive(:process_move)
+        allow(game_running).to receive(:game_over?).and_return(true)
       end
-      it 'will not call the methods' do
+      it 'not call the methods' do
         expect(board).not_to receive(:display_board)
         expect(game_running).not_to receive(:process_move)
-        game_running.run_game
       end
     end
   end
 
-  describe 'check_combination' do
-    subject(:winning_combination) { described_class.new }
-    it 'will return true if combination is found' do
-      win = winning_combination.check_combination
+  describe '#game_over?' do
+    let(:player) { double('player') }
+    let(:board) { double('board') }
+    subject(:game_end) { described_class.new(player, board) }
 
-      expect(win).to eq(true)
+    before do
+      allow(board).to receive(:board)
+      game_end.instance_variable_set(:@last_position, [[5, 2], [4, 2], [5, 3]])
+      game_end.instance_variable_set(:@player_disc, [[], []])
+      allow(game_end).to receive(:winning_move?).and_return(true)
+      allow(game_end).to receive(:declare_win)
+    end
+
+    it 'returns true when game is over' do
+      combination_found = game_end.game_over?
+      expect(combination_found).to eq(true)
     end
   end
 end
