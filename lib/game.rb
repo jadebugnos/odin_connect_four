@@ -41,14 +41,17 @@ class Game
   # Checks if the last move resulted in a win.
   # Parameters: game board, last move's row and column, and the current player's disc.
   def game_over?
-    game_board = @board.board
-    row = @last_position[-1][0]
-    column = @last_position[-1][1]
-
-    return false unless winning_move?(game_board, row, column, @player_disc)
+    return false unless combination_found?
 
     declare_win
     true
+  end
+
+  def combination_found?
+    game_board = @board.board
+    row = @last_position[-1][0]
+    column = @last_position[-1][1]
+    winning_move?(game_board, row, column, @player_disc)
   end
 
   # Gets input from player, determines the correct disc, and updates the board
