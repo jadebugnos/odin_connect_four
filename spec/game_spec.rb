@@ -64,17 +64,52 @@ RSpec.describe Game do
     let(:board) { double('board') }
     subject(:game_end) { described_class.new(player, board) }
 
-    before do
-      allow(board).to receive(:board)
-      game_end.instance_variable_set(:@last_position, [[5, 2], [4, 2], [5, 3]])
-      game_end.instance_variable_set(:@player_disc, [[], []])
-      allow(game_end).to receive(:winning_move?).and_return(true)
-      allow(game_end).to receive(:declare_win)
+    context 'when the game is over' do
+      before do
+        allow(game_end).to receive(:combination_found?).and_return(true)
+      end
+
+      it 'declares the win and returns true' do
+        expect(game_end).to receive(:declare_win)
+        expect(game_end.game_over?).to eq(true)
+      end
     end
 
-    it 'returns true when game is over' do
-      combination_found = game_end.game_over?
-      expect(combination_found).to eq(true)
+    context 'when the game is not over' do
+      before do
+        allow(game_end).to receive(:combination_found?).and_return(false)
+      end
+
+      it 'does not call declare_win and returns false' do
+        expect(game_end).not_to receive(:declare_win)
+        expect(game_end.game_over?).to eq(false)
+      end
+    end
+  end
+
+  describe 'combination_found?' do
+    let(:player) { double('player') }
+    let(:board) { double('board') }
+    subject(:finding_combination) { described_class.new(player, board) }
+
+    before do
+      allow(board).to receive(:board)
+      finding_combination.instance_variable_set(:@last_position, [[5, 2], [4, 2], [5, 3]])
+      finding_combination.instance_variable_set(:@player_disc, [[], []])
+    end
+
+    it 'returns true if if a winning move has been found' do
+      allow(finding_combination).to receive(:winning_move?).and_return(true)
+      search = finding_combination.combination_found?
+
+      expect(search).to eq(true)
+    end
+
+    it 'returns false if a winning move has not been found' do
+      allow(finding_combination).to receive(:winning_move?).and_return(false)
+      search = finding_combination.combination_found?
+
+      expect(search).to eq(false)
     end
   end
 end
